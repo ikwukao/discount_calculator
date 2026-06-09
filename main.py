@@ -5,3 +5,6 @@ class Product:
 
     def __str__(self) -> str:
         return f"{self.name} - ${self.price}"
+
+product = Product("Wireless Mouse", 50.0)
+print(product)  # Wireless Mouse - $50.0
