@@ -60,18 +60,11 @@ class DiscountEngine:
     def __init__(self, strategies: list[DiscountStrategy]) -> None:
         self.strategies = strategies
 
+    def calculate_best_price(self, product: Product, user_tier: str) -> float:
+        prices = [product.price]
 
-product = Product("Wireless Mouse", 50.0)
-print(product)  # Wireless Mouse - $50.0
-
-discount = PercentageDiscount(10)
-print(discount.apply_discount(product))
-
-fixed_discount = FixedAmountDiscount(5)
-print(fixed_discount.apply_discount(product))
-
-
-# Output:
-# Wireless Mouse - $50.0
-# 45.0
-# 45.0
+        for strategy in self.strategies:
+            if strategy.is_applicable(product, user_tier):
+                discounted = strategy.apply_discount(product)
+                prices.append(discounted)
+        return min(prices)
